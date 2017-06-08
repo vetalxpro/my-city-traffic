@@ -14,6 +14,7 @@ export const AppModule: IModule = module('app', [
   'ui.router',
   'ngAnimate',
   'ngMaterial',
+  'ngMap',
   'firebase',
   SharedModule.name,
   CoreModule.name,

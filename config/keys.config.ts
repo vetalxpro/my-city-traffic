@@ -1,6 +1,6 @@
 export const keys = {
   google: {
-    apiKey: '-API-KEY-',
+    apiKey: 'AIzaSyC8aHnKnPzcEdeN-eJ-eFfKpTG1XTjiKrg',
     libraries: 'places'
   }
 };
