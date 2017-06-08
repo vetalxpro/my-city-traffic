@@ -12,6 +12,7 @@
     "jsdoc-format": false,
     "object-literal-shorthand": false,
     "member-access": false,
+    "member-ordering": false,
     "no-consecutive-blank-lines": [
       true,
       2

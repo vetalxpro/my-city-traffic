@@ -1,2 +1,15 @@
-<top-bar></top-bar>
-<ui-view flex></ui-view>
+<top-bar
+    left-sidenav-id="{{$ctrl.leftSidenavId}}"
+    flex="nogrow"
+    auth="$ctrl.auth()"
+    find-coordinates="$ctrl.findCoordinates()"
+    logout="$ctrl.logout()"
+    user="$ctrl.getUser()"
+></top-bar>
+<div class="wrapper" flex layout="column">
+  <side-nav left-sidenav-id="{{$ctrl.leftSidenavId}}" flex="nogrow"></side-nav>
+  <md-content flex>
+    <ui-view flex></ui-view>
+  </md-content>
+</div>
+

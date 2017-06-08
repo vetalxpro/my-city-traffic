@@ -1,0 +1,65 @@
+<md-toolbar
+    layout="row"
+    layout-align="space-between center"
+    class="md-toolbar-tools md-hue-2">
+  <div flex="nogrow">
+    <md-button
+        hide-gt-sm
+        ng-click="$ctrl.toggleLeftSideNav()"
+        aria-label="menu">
+      <md-icon md-svg-icon="menu"></md-icon>
+    </md-button>
+
+    <nav-bar hide show-gt-sm></nav-bar>
+  </div>
+
+  <div flex="nogrow">
+
+    <span
+        ng-if="$ctrl.user"
+        hide
+        show-gt-sm
+    >{{ $ctrl.user.displayName }}
+    </span>
+
+    <md-button
+        ng-if="!$ctrl.user"
+        class="md-fab md-mini"
+        ng-click="$ctrl.auth()"
+        aria-label="authorize">
+      <md-icon md-svg-icon="auth"></md-icon>
+      <md-tooltip md-autohide="true">
+        Authorize
+      </md-tooltip>
+    </md-button>
+
+    <md-button
+        ng-if="$ctrl.user"
+        class="md-fab md-mini fab-cover-img" aria-label="avatar">
+      <img data-ng-src="{{$ctrl.user.photoURL}}"
+           class="fab-img" alt="avatar">
+    </md-button>
+
+    <md-button
+        ng-if="$ctrl.user"
+        class="md-icon-button"
+        ng-click="$ctrl.findCoordinates()"
+        aria-label="settings">
+      <md-icon md-svg-icon="coords"></md-icon>
+      <md-tooltip md-autohide="true">
+        Find coordinates
+      </md-tooltip>
+    </md-button>
+
+    <md-button
+        ng-if="$ctrl.user"
+        class="md-icon-button"
+        ng-click="$ctrl.logout()"
+        aria-label="logout">
+      <md-icon md-svg-icon="logout"></md-icon>
+      <md-tooltip md-autohide="true">
+        Logout
+      </md-tooltip>
+    </md-button>
+  </div>
+</md-toolbar>

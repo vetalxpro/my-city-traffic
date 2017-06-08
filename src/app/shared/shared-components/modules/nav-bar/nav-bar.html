@@ -1,0 +1,28 @@
+<md-nav-bar
+    ng-if="!$ctrl.list"
+    md-no-ink-bar="true"
+    md-selected-nav-item="$ctrl.getActiveName()"
+    nav-bar-aria-label="navigation links">
+  <md-nav-item
+      ng-repeat="item in $ctrl.menuItems"
+      md-nav-click="$ctrl.navigate(item)" name="{{ item.name }}">
+    {{ item.title }}
+  </md-nav-item>
+</md-nav-bar>
+
+<md-list
+    ng-if="$ctrl.list"
+    md-selected-nav-item="$ctrl.getActiveName()"
+    nav-bar-aria-label="navigation links">
+  <md-list-item
+      ng-repeat="item in $ctrl.menuItems"
+      ng-class="{active: $ctrl.navbarService.activeMenuItem === item}">
+    <md-button
+        class="md-raised"
+        ng-class="{'md-primary': $ctrl.navbarService.activeMenuItem === item}"
+        ng-click="$ctrl.navigate(item)"
+        name="{{ item.name }}"
+    >{{ item.title }}
+    </md-button>
+  </md-list-item>
+</md-list>

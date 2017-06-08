@@ -1,10 +1,12 @@
-.text {
-    font-size: 20px;
-    color: #0074d9;
-}
+app {
+  height: 100%;
+  .fab-cover-img {
+    padding: 0;
+    .fab-img {
+      display: block;
+      border-radius: 50%;
+      max-width: 100%;
+    }
+  }
 
-.icon {
-    display: inline-block;
-    height: 50px;
-    width: 50px;
 }

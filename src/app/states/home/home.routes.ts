@@ -8,3 +8,4 @@ export function homeRoutes( $stateProvider: IStateProvider ) {
     component: homeComponentSelector
   });
 }
+homeRoutes.$inject = [ '$stateProvider' ];
