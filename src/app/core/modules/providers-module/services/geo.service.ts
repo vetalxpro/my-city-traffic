@@ -3,14 +3,14 @@ import { google } from 'google-maps';
 
 
 export class GeoService {
-  static $inject = [ '$q' ];
+  static $inject = [ '$q', 'NavigatorGeolocation' ];
 
   public currentPosition: Position;
   private geocoder = new google.maps.Geocoder();
   private geocoderErrors: google.maps.GeocoderStatus[];
 
 
-  constructor( private $q: IQService ) {
+  constructor( private $q: IQService, private navigatorGeolocation ) {
     this.init();
   }
 
@@ -25,22 +25,17 @@ export class GeoService {
   }
 
   public getCurrentCoordinates(): IPromise<Position> {
-    return this.$q(( resolve, reject ) => {
-      if ( this.currentPosition ) {
-        resolve(this.currentPosition);
-      } else {
-        navigator.geolocation.getCurrentPosition(
-          ( position ) => {
-            resolve(position);
-          }, ( err ) => {
-            reject(err);
-          }
-        );
-      }
-    });
+    if ( this.currentPosition ) {
+      return this.$q.resolve(this.currentPosition);
+    }
+    return this.navigatorGeolocation.getCurrentPosition()
+      .then(( position ) => {
+        this.currentPosition = position;
+        return this.currentPosition;
+      });
   }
 
-  public askGeocoder( options: google.maps.GeocoderRequest, types?: string[] ): IPromise<google.maps.GeocoderResult[]> {
+  public geocode( options: google.maps.GeocoderRequest, types?: string[] ): IPromise<google.maps.GeocoderResult[]> {
     return this.$q(( resolve, reject ) => {
       this.geocoder.geocode(options, ( results, status ) => {
         if ( this.geocoderErrors.indexOf(status) > -1 || !results.length ) {
@@ -66,7 +61,7 @@ export class GeoService {
     const options: google.maps.GeocoderRequest = {
       location: this.positionToLatLng(position)
     };
-    return this.askGeocoder(options, [ 'route' ])
+    return this.geocode(options, [ 'route' ])
       .then(( data: google.maps.GeocoderResult[] ) => {
         if ( data.length ) {
           return data[ 0 ];

@@ -21,6 +21,7 @@
     "@types/google-maps": "^3.2.0",
     "@types/jasmine": "^2.5.47",
     "@types/karma": "^0.13.35",
+    "@types/ngmap": "^1.17.2",
     "@types/node": "^7.0.22",
     "@types/webpack": "^2.2.15",
     "@types/webpack-dev-server": "^2.4.0",
