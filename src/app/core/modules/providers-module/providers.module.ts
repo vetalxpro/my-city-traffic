@@ -1,8 +1,11 @@
 import { IModule, module } from 'angular';
 
-import { AuthService, FirebaseService, ToastService } from './services';
+import { AuthService, ToastService, GeoService, StorageService } from './services';
+import { firebaseConstant } from './constants';
 
 export const ProvidersModule: IModule = module('app.core.providers', [])
-  .service(FirebaseService.name, FirebaseService)
+  .constant('firebase', firebaseConstant)
   .service(AuthService.name, AuthService)
-  .service(ToastService.name, ToastService);
+  .service(ToastService.name, ToastService)
+  .service(GeoService.name, GeoService)
+  .service(StorageService.name, StorageService);

@@ -1,32 +1,32 @@
 import { IComponentOptions, IScope } from 'angular';
-import './app.scss';
 
 import { AppService } from './app.service';
+import './app.scss';
 
 
 export const appComponentSelector = 'app';
 
 class AppController {
   static $inject = [ '$rootScope', 'AppService' ];
-  leftSidenavId = 'leftSidenav';
+  public leftSidenavId = 'leftSidenav';
 
   constructor( private $rootScope: IScope,
                private appService: AppService ) {
   }
 
-  auth() {
+  public auth() {
     this.appService.auth();
   }
 
-  findCoordinates() {
+  public findCoordinates() {
     this.appService.findCoordinates();
   }
 
-  logout() {
+  public logout() {
     this.appService.logout();
   }
 
-  getUser() {
+  public getUser() {
     return this.appService.getUser();
   }
 }

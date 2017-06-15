@@ -8,8 +8,8 @@
 ></top-bar>
 <div class="wrapper" flex layout="column">
   <side-nav left-sidenav-id="{{$ctrl.leftSidenavId}}" flex="nogrow"></side-nav>
-  <md-content flex>
-    <ui-view flex></ui-view>
+  <md-content flex layout="row">
+    <ui-view flex layout="column"></ui-view>
   </md-content>
 </div>
 

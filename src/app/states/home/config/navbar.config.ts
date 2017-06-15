@@ -1,12 +1,11 @@
 import { NavbarProvider } from '../../../shared/shared-components/modules/nav-bar/providers';
 
-export function menuConfig( navbarServiceProvider: NavbarProvider ) {
+export function navbarConfig( navbarServiceProvider: NavbarProvider ) {
   navbarServiceProvider.addMenuItem({
     title: 'Home',
     sref: 'home',
     name: 'Home',
-    active: false,
-    order: 2
+    order: 3
   });
 }
-menuConfig.$inject = [ 'NavbarServiceProvider' ];
+navbarConfig.$inject = [ 'NavbarServiceProvider' ];

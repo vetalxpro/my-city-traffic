@@ -1,1 +1,1 @@
-export * from './menu.config';
+export * from './navbar.config';

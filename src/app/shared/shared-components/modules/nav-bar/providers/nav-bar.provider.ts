@@ -3,6 +3,7 @@ import { IServiceProvider } from 'angular';
 import { IMenuItem } from '../models';
 import { NavbarService } from '../services';
 
+
 export class NavbarProvider implements IServiceProvider {
   private menuItems: IMenuItem[] = [];
 

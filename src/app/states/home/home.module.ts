@@ -1,7 +1,7 @@
 import { IModule, module } from 'angular';
 
 import { homeRoutes } from './home.routes';
-import { menuConfig } from './config';
+import { navbarConfig } from './config';
 import { HomeComponent, homeComponentSelector } from './home.component';
 
 export const HomeModule: IModule = module('HomeModule', [
@@ -9,4 +9,4 @@ export const HomeModule: IModule = module('HomeModule', [
 ])
   .component(homeComponentSelector, HomeComponent)
   .config(homeRoutes)
-  .config(menuConfig);
+  .config(navbarConfig);

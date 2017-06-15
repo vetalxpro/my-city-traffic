@@ -1,0 +1,21 @@
+<md-sidenav
+    flex
+    ng-if="$ctrl.currentUser"
+    md-component-id="directions-nav"
+    class="md-whiteframe-4dp"
+    md-is-locked-open="$mdMedia('gt-sm')"
+>
+  Directions List
+  <md-list data-ng-if="$ctrl.directions" class="make-scrollable">
+    <md-list-item
+        data-ng-repeat="direction in $ctrl.directions"
+    >
+      <md-button
+          class="md-raised"
+          ng-class="{'md-primary':$ctrl.selectedDirection===direction}"
+          ng-click="$ctrl.selectDirection(direction)">
+        {{ direction.title }}
+      </md-button>
+    </md-list-item>
+  </md-list>
+</md-sidenav>

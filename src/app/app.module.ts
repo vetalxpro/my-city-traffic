@@ -16,8 +16,9 @@ export const AppModule: IModule = module('app', [
   'ngMaterial',
   'ngMap',
   'firebase',
-  SharedModule.name,
+  'LocalStorageModule',
   CoreModule.name,
+  SharedModule.name,
   StatesModule.name
 ]).component(appComponentSelector, AppComponent)
   .component(topBarComponentSelector, TopbarComponent)

@@ -1,6 +1,6 @@
 <md-nav-bar
     ng-if="!$ctrl.list"
-    md-no-ink-bar="true"
+    md-no-ink-bar="false"
     md-selected-nav-item="$ctrl.getActiveName()"
     nav-bar-aria-label="navigation links">
   <md-nav-item
@@ -12,14 +12,13 @@
 
 <md-list
     ng-if="$ctrl.list"
-    md-selected-nav-item="$ctrl.getActiveName()"
     nav-bar-aria-label="navigation links">
   <md-list-item
       ng-repeat="item in $ctrl.menuItems"
-      ng-class="{active: $ctrl.navbarService.activeMenuItem === item}">
+      ng-class="{active: $ctrl.isActive(item)}">
     <md-button
-        class="md-raised"
-        ng-class="{'md-primary': $ctrl.navbarService.activeMenuItem === item}"
+        class="md-raised sidebar-btn"
+        ng-class="{'md-primary': $ctrl.isActive(item)}"
         ng-click="$ctrl.navigate(item)"
         name="{{ item.name }}"
     >{{ item.title }}

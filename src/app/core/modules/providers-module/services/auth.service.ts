@@ -1,65 +1,91 @@
-import { FirebaseService } from './firebase.service';
-import { auth } from 'firebase';
+import { IPromise, IRootScopeService } from 'angular';
+import { app as firebaseApp, auth, UserInfo } from 'firebase';
+import { StorageService } from './storage.service';
+import { User } from '../../../models';
+
 
 export class AuthService {
-  static $inject = [ 'FirebaseService', '$firebaseObject', '$firebaseArray', '$firebaseAuth' ];
-  private firebase: firebase.app.App;
+  static $inject = [
+    'firebase',
+    '$firebaseObject',
+    '$firebaseArray',
+    '$firebaseAuth',
+    'StorageService',
+    '$rootScope'
+  ];
+  public currentUser: User;
   private auth;
   private firebaseRef;
-  private currentUser;
   private firebaseUserArrayRef;
   private firebaseMessagesArrayRef;
 
-  constructor( private firebaseService: FirebaseService,
+  constructor( private firebase: firebaseApp.App,
                private $firebaseObject,
                private $firebaseArray,
-               private $firebaseAuth ) {
-    this.firebase = firebaseService.firebase;
-    this.setup();
+               private $firebaseAuth,
+               private storageService: StorageService,
+               private $rootScope: IRootScopeService ) {
+    this.init();
   }
 
-  private setup() {
+  private init() {
     this.auth = this.$firebaseAuth(this.firebase.auth());
     this.firebaseRef = this.firebase.database().ref();
-    this.firebaseMessagesArrayRef = this.$firebaseArray(this.firebaseRef.child('messages'));
     this.registerListeners();
   }
 
-  authenticate() {
+  public authenticate(): IPromise<User> {
     return this.auth.$signInWithPopup(new auth.GoogleAuthProvider())
-      .then(( result ) => {
-        this.currentUser = result.user;
+      .then(( data ) => {
+        console.log(data);
+        this.currentUser = this.transformFirebaseUser(data.user);
+        return this.currentUser;
       });
   }
 
-  logout() {
-    this.auth.$signOut();
+  public logout(): IPromise<any> {
+    return this.auth.$signOut()
+      .then(() => {
+        this.storageService.clearUser();
+      });
   }
 
   private registerListeners() {
-    this.auth.$onAuthStateChanged(( firebaseUser ) => {
-      console.log(firebaseUser);
+    this.auth.$onAuthStateChanged(( firebaseUser: UserInfo ) => {
       if ( firebaseUser ) {
-        this.currentUser = firebaseUser;
+        this.currentUser = this.transformFirebaseUser(firebaseUser);
+        this.storageService.saveUser(this.currentUser, true);
+        this.firebaseMessagesArrayRef = this.$firebaseArray(this.firebaseRef.child('messages'));
+        this.$rootScope.$broadcast('userAuthorized');
       } else {
         this.currentUser = null;
+        this.firebaseMessagesArrayRef = null;
+        this.storageService.clearUser();
       }
     });
   }
 
-  getUser() {
-    return this.currentUser;
+  public addMessage() {
+    if ( this.currentUser ) {
+      this.firebaseMessagesArrayRef.$add({
+        title: 'Title' + Date.now(),
+        text: 'text'
+      });
+    }
   }
 
-  addMessage() {
-    this.firebaseMessagesArrayRef.$add({
-      title: 'Title' + Date.now(),
-      text: 'text'
-    });
-  }
-
-  getMessages() {
+  public getMessages() {
     return this.firebaseMessagesArrayRef;
+  }
+
+  private transformFirebaseUser( user: UserInfo ) {
+    return new User({
+      id: user.uid,
+      providerId: user.uid,
+      username: user.displayName,
+      email: user.email,
+      image: user.photoURL
+    });
   }
 
 }

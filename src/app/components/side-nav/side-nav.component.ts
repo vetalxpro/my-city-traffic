@@ -1,5 +1,7 @@
 import { IComponentOptions } from 'angular';
+
 import './side-nav.scss';
+
 
 export const sidenavComponentSelector = 'sideNav';
 

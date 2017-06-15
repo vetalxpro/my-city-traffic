@@ -1,41 +1,38 @@
 import { IComponentOptions, IOnInit, ui } from 'angular';
-import './nav-bar.scss';
 
 import { NavbarService } from './services';
 import { IMenuItem } from './models';
+import './nav-bar.scss';
+
 
 export const navBarComponentSelector = 'navBar';
 
 class NavBarController implements IOnInit {
   static $inject = [ '$state', 'NavbarService' ];
-  list: boolean;
-  menuItems: IMenuItem[] = [];
+  public list: boolean;
+  public menuItems: IMenuItem[] = [];
 
   constructor( private $state: ui.IStateService,
                private navbarService: NavbarService ) {
   }
 
-  $onInit() {
+  public $onInit() {
     this.menuItems = this.navbarService.fetchMenuItems();
-    if ( this.navbarService.activeMenuItem ) {
-      this.$state.go(this.navbarService.activeMenuItem.sref);
-    } else {
-      this.$state.go(this.menuItems[ 0 ].sref);
-    }
   }
 
-  navigate( item: IMenuItem ) {
-    this.navbarService.activeMenuItem = item;
+  public navigate( item: IMenuItem ) {
     this.$state.go(item.sref);
   }
 
-  getActiveName(): string {
-    if ( this.navbarService.activeMenuItem ) {
-      return this.navbarService.activeMenuItem.name;
-    } else {
-      this.menuItems[ 0 ].active = true;
-      return this.menuItems[ 0 ].name;
+  public getActiveName(): string {
+    const active = this.menuItems.find(( item ) => this.isActive(item));
+    if ( active ) {
+      return active.name;
     }
+  }
+
+  public isActive( item: IMenuItem ): boolean {
+    return this.$state.is(item.sref);
   }
 }
 

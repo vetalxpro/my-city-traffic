@@ -1,4 +1,4 @@
-import { IComponentOptions, IOnInit } from 'angular';
+import { IComponentOptions, IOnInit, IScope } from 'angular';
 import './home.scss';
 import { AuthService } from '../../core/modules/providers-module/services/auth.service';
 import { ToastService } from '../../core/modules/providers-module/services/toast.service';
@@ -6,20 +6,29 @@ import { ToastService } from '../../core/modules/providers-module/services/toast
 export const homeComponentSelector = 'home';
 
 class HomeController implements IOnInit {
-  static $inject = [ 'AuthService', 'ToastService' ];
+  static $inject = [ 'AuthService', 'ToastService', '$scope' ];
   public title = 'Home Component Works!';
-  messages: any[] = [];
+  public messages: any[] = [];
 
-  constructor( private authService: AuthService, private toastService: ToastService ) {
+  constructor( private authService: AuthService,
+               private toastService: ToastService,
+               private $scope: IScope ) {
 
   }
 
-  $onInit() {
+  public $onInit() {
     this.messages = this.authService.getMessages();
+    this.$scope.$on('userAuthorized', () => {
+      this.messages = this.authService.getMessages();
+    });
   }
 
-  showTitleInToast( title: string ) {
+  public showTitleInToast( title: string ) {
     this.toastService.showSimple(title);
+  }
+
+  public isAuth(): boolean {
+    return !!this.authService.currentUser;
   }
 }
 

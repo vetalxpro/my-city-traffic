@@ -1,0 +1,19 @@
+<md-content flex layout-padding>
+  <p ng-if="!$ctrl.getUser()">You are no logged in</p>
+  <form name="contributionForm"
+        ng-if="$ctrl.getUser()"
+        ng-submit="contributionForm.$valid && $ctrl.submitForm()"
+        novalidate
+  >
+    <!--<label>Origin</label>-->
+    <input ng-model="$ctrl.origin" placeholder="origin" required>
+    <div class="form-actions">
+      <md-button
+          class="md-raised"
+          ng-class="{'md-primary':contributionForm.$valid}"
+          type="submit">Submit
+      </md-button>
+    </div>
+
+  </form>
+</md-content>

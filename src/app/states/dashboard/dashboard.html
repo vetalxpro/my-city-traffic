@@ -1,1 +1,10 @@
-<traffic-map></traffic-map>
+<traffic-map flex
+             center="$ctrl.getUserPosition()"
+             direction="$ctrl.selectedDirection">
+
+</traffic-map>
+<directions-nav current-user="$ctrl.getUser()"
+                directions="$ctrl.directions"
+                selected-direction="$ctrl.selectedDirection"
+                on-select="$ctrl.onDirectionSelect(direction)">
+</directions-nav>

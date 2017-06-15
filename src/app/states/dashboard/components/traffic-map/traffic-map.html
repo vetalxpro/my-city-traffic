@@ -1,1 +1,12 @@
-<ng-map center="[46.75, 30.13]" zoom="11"></ng-map>
+<ng-map
+    center="[46.75, 30.13]"
+    zoom="13"
+    draggable="true"
+    on-click="$ctrl.getPoint(event)"
+>
+  <directions
+      draggable="false"
+      origin="{{ $ctrl.direction.origin }}"
+      destination="{{ $ctrl.direction.destination }}">
+  </directions>
+</ng-map>

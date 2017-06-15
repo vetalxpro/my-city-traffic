@@ -19,7 +19,7 @@
         ng-if="$ctrl.user"
         hide
         show-gt-sm
-    >{{ $ctrl.user.displayName }}
+    >{{ $ctrl.user.username }}
     </span>
 
     <md-button
@@ -36,7 +36,7 @@
     <md-button
         ng-if="$ctrl.user"
         class="md-fab md-mini fab-cover-img" aria-label="avatar">
-      <img data-ng-src="{{$ctrl.user.photoURL}}"
+      <img data-ng-src="{{$ctrl.user.image}}"
            class="fab-img" alt="avatar">
     </md-button>
 

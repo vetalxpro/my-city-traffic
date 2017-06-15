@@ -1,5 +1,7 @@
 import { IComponentOptions, material } from 'angular';
+
 import './top-bar.scss';
+
 
 export const topBarComponentSelector = 'topBar';
 
