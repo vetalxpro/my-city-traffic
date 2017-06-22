@@ -50,7 +50,7 @@ class GooglemapsAutocompleteController {
     }
   }
 
-  getResults(): IPromise<any[]> {
+  public getResults(): IPromise<any[]> {
     let resuls;
     if ( this.searchText !== this.oldSearchText ) {
       resuls = this.searchTextChange();

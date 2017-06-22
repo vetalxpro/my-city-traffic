@@ -1,25 +1,52 @@
 <md-content flex layout-padding>
   <p ng-if="!$ctrl.getUser()">You are no logged in</p>
-  <form name="contributionForm"
-        ng-if="$ctrl.getUser()"
-        ng-submit="contributionForm.$valid && $ctrl.submitForm()"
-        novalidate
+  <form
+    flex
+    layout="column"
+    name="contributionForm"
+    ng-if="$ctrl.getUser()"
+    ng-submit="contributionForm.$valid && $ctrl.submitForm()"
+    novalidate
   >
     <!--<label>Origin</label>-->
-    <googlemaps-autocomplete
-      placeholder="origin"
-      ng-model="$ctrl.origin"
-      required="true"
-      on-place-changed="$ctrl.changePlace('origin', position)"
-      on-error="$ctrl.handleError(error)"
-    ></googlemaps-autocomplete>
-    <googlemaps-autocomplete
-      placeholder="destination"
-      ng-model="$ctrl.destination"
-      required="true"
-      on-place-changed="$ctrl.changePlace('destination', position)"
-      on-error="$ctrl.handleError(error)"
-    ></googlemaps-autocomplete>
+    <div flex layout="row">
+      <md-button
+        class="md-fab md-mini"
+        ng-click="$ctrl.openDialog()"
+      >
+        <md-tooltip md-autohide="true">
+          Add origin point
+        </md-tooltip>
+        <md-icon md-svg-icon="coords"></md-icon>
+      </md-button>
+      <googlemaps-autocomplete
+        flex
+        placeholder="origin"
+        ng-model="$ctrl.origin"
+        required="true"
+        on-place-changed="$ctrl.changePlace('origin', position)"
+        on-error="$ctrl.handleError(error)"
+      ></googlemaps-autocomplete>
+    </div>
+    <div flex layout="row">
+      <md-button
+        class="md-fab md-mini"
+        ng-click="$ctrl.openDialog()"
+      >
+        <md-tooltip md-autohide="true">
+          Add destination point
+        </md-tooltip>
+        <md-icon md-svg-icon="coords"></md-icon>
+      </md-button>
+      <googlemaps-autocomplete
+        flex
+        placeholder="destination"
+        ng-model="$ctrl.destination"
+        required="true"
+        on-place-changed="$ctrl.changePlace('destination', position)"
+        on-error="$ctrl.handleError(error)"
+      ></googlemaps-autocomplete>
+    </div>
     <div class="form-actions">
       <md-button
         class="md-raised"
@@ -29,5 +56,5 @@
     </div>
 
   </form>
-  <md-button ng-click="$ctrl.openDialog()">Open Dialog</md-button>
+
 </md-content>
