@@ -1,5 +1,5 @@
 import { material } from 'angular';
-import { coreConfig } from '../../../core.config';
+import { coreConfig } from '../../core.config';
 
 export class ToastService {
   static $inject = [ '$mdToast' ];

@@ -1,4 +1,4 @@
-import { NavbarProvider } from '../../../shared/shared-components/modules/nav-bar/providers';
+import { NavbarProvider } from '../../../shared/components/nav-bar/providers';
 
 
 export function navbarConfig( navbarServiceProvider: NavbarProvider ) {

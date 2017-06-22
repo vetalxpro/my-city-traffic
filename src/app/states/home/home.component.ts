@@ -1,7 +1,7 @@
 import { IComponentOptions, IOnInit, IScope } from 'angular';
 import './home.scss';
-import { AuthService } from '../../core/modules/providers-module/services/auth.service';
-import { ToastService } from '../../core/modules/providers-module/services/toast.service';
+import { AuthService } from '../../core/providers/services/auth.service';
+import { ToastService } from '../../core/providers/services/toast.service';
 
 export const homeComponentSelector = 'home';
 

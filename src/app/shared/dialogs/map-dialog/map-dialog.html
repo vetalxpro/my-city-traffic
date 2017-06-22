@@ -1,0 +1,14 @@
+<md-dialog-content aria-label="Choosing map point">
+  <div class="md-dialog-content map-dialog" layout="row">
+    <ng-map
+      flex
+      zoom="{{ mapDialog.zoom }}"
+      on-click="mapDialog.getPosition(event)"
+    ></ng-map>
+  </div>
+  <md-dialog-actions layout="row">
+    <md-button ng-click="mapDialog.closeDialog()">
+      Cancel
+    </md-button>
+  </md-dialog-actions>
+</md-dialog-content>

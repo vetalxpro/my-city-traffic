@@ -1,6 +1,6 @@
 import { local } from 'angular';
 
-import { User } from '../../../models';
+import { User } from '../../models';
 
 
 export class StorageService {

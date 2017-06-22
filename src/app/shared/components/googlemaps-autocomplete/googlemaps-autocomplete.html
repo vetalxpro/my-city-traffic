@@ -1,0 +1,19 @@
+<md-autocomplete
+  md-selected-item="$ctrl.selectedItem"
+  md-search-text="$ctrl.searchText"
+  md-items="item in $ctrl.getResults()"
+  md-item-text="item.description"
+  md-selected-item-change="$ctrl.selectedItemChange()"
+  md-no-cache="$ctrl.noCache"
+  md-min-length="0"
+  md-delay="$ctrl.delay"
+  ng-required="$ctrl.required"
+  ng-disabled="$ctrl.isDisabled"
+  placeholder="{{ $ctrl.placeholder }}"
+>
+  <md-item-template>
+    <span md-highlight-text="$ctrl.searchText">
+      {{item.description}}
+    </span>
+  </md-item-template>
+</md-autocomplete>

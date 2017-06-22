@@ -6,14 +6,28 @@
         novalidate
   >
     <!--<label>Origin</label>-->
-    <input ng-model="$ctrl.origin" placeholder="origin" required>
+    <googlemaps-autocomplete
+      placeholder="origin"
+      ng-model="$ctrl.origin"
+      required="true"
+      on-place-changed="$ctrl.changePlace('origin', position)"
+      on-error="$ctrl.handleError(error)"
+    ></googlemaps-autocomplete>
+    <googlemaps-autocomplete
+      placeholder="destination"
+      ng-model="$ctrl.destination"
+      required="true"
+      on-place-changed="$ctrl.changePlace('destination', position)"
+      on-error="$ctrl.handleError(error)"
+    ></googlemaps-autocomplete>
     <div class="form-actions">
       <md-button
-          class="md-raised"
-          ng-class="{'md-primary':contributionForm.$valid}"
-          type="submit">Submit
+        class="md-raised"
+        ng-class="{'md-primary':contributionForm.$valid}"
+        type="submit">Submit
       </md-button>
     </div>
 
   </form>
+  <md-button ng-click="$ctrl.openDialog()">Open Dialog</md-button>
 </md-content>

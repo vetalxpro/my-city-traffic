@@ -1,6 +1,6 @@
 import { IComponentOptions, IOnChanges, IOnInit } from 'angular';
 
-import { Contribution } from '../../../../core/models/contribution';
+import { Contribution } from '../../../../core/models';
 import { Position } from '../../../../core/models';
 import './traffic-map.scss';
 

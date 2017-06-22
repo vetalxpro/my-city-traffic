@@ -1,6 +1,6 @@
 import { IComponentOptions } from 'angular';
 
-import { AuthService, StorageService } from '../../core/modules/providers-module/services';
+import { AuthService, StorageService } from '../../core/providers/services';
 import { Contribution } from '../../core/models/contribution';
 import './dashboard.scss';
 

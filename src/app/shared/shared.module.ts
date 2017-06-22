@@ -1,7 +1,10 @@
 import { IModule, module } from 'angular';
 
-import { SharedComponentModule } from './shared-components/shared-components.module';
+import { SharedComponentModule } from './components/shared-components.module';
+import { SharedDialogsModule } from './dialogs/shared-dialogs.module';
+
 
 export const SharedModule: IModule = module('app.shared', [
-  SharedComponentModule.name
+  SharedComponentModule.name,
+  SharedDialogsModule.name
 ]);

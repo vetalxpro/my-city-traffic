@@ -1,7 +1,7 @@
 import { IPromise, IRootScopeService } from 'angular';
 import { app as firebaseApp, auth, UserInfo } from 'firebase';
 import { StorageService } from './storage.service';
-import { User } from '../../../models';
+import { User } from '../../models';
 
 
 export class AuthService {
@@ -37,7 +37,6 @@ export class AuthService {
   public authenticate(): IPromise<User> {
     return this.auth.$signInWithPopup(new auth.GoogleAuthProvider())
       .then(( data ) => {
-        console.log(data);
         this.currentUser = this.transformFirebaseUser(data.user);
         return this.currentUser;
       });
