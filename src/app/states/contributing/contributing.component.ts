@@ -1,4 +1,4 @@
-import { IComponentOptions } from 'angular';
+import { IComponentOptions, ui } from 'angular';
 
 import { AuthService, ToastService } from '../../core/providers/services';
 import { ContributingService } from './contributing.service';
@@ -7,14 +7,27 @@ import './contributing.scss';
 
 export const contributingComponentSelector = 'contributing';
 
+export interface IContributionFormData {
+  title: string;
+  origin: google.maps.GeocoderResult;
+  destination: google.maps.GeocoderResult;
+  additional?: google.maps.GeocoderResult[];
+}
+
 class ContributingController {
-  static $inject = [ 'AuthService', 'ToastService', 'ContributingService' ];
-  public origin: string;
-  public destination: string;
+  static $inject = [ 'AuthService', 'ToastService', 'ContributingService', '$state' ];
+  public contributionFormData: IContributionFormData;
 
   constructor( private authService: AuthService,
                private toastService: ToastService,
-               private contributingService: ContributingService ) {
+               private contributingService: ContributingService,
+               private $state: ui.IStateService ) {
+    this.contributionFormData = {
+      title: '',
+      origin: null,
+      destination: null,
+      additional: []
+    };
 
   }
 
@@ -27,21 +40,35 @@ class ContributingController {
   }
 
   public submitForm() {
-    console.log(this.origin, this.destination);
+    this.contributingService.contribute(this.contributionFormData);
+    this.$state.go('dashboard');
   }
 
   public handleError( error ) {
     this.toastService.showSimple(error);
   }
 
-  public openDialog() {
+  public openDialog( pointType: string, additional: boolean = false ) {
     this.contributingService.showDialog()
-      .then(( result ) => {
-        console.log(result);
+      .then(( result: google.maps.GeocoderResult ) => {
+        if ( additional ) {
+          this.contributionFormData.additional[ pointType ] = result;
+        } else {
+          this.contributionFormData[ pointType ] = result;
+        }
+        console.log(this.contributionFormData);
       })
       .catch(( err ) => {
         console.log(err);
       });
+  }
+
+  public addAdditionalPoint() {
+    this.contributionFormData.additional.push(null);
+  }
+
+  public removeAdditionalPoint( index: number ) {
+    this.contributionFormData.additional.splice(index, 1);
   }
 }
 

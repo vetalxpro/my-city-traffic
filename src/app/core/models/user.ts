@@ -34,7 +34,7 @@ export class User implements IUser {
     this.token = user.token || null;
     this.lastLogin = user.lastLogin || null;
     this.online = user.online || null;
-    this.location = new LocationWithBounds({});
+    this.location = new LocationWithBounds(user.location);
     this.placeId = user.placeId || null;
   }
 }

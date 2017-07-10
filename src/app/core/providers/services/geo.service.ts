@@ -59,6 +59,13 @@ export class GeoService {
     return results;
   }
 
+  public exportLatLng( location: google.maps.GeocoderResult ) {
+    return {
+      lat: location.geometry.location.lat(),
+      lng: location.geometry.location.lng()
+    };
+  }
+
   public getPlace( position: IPosition ): IPromise<google.maps.GeocoderResult> {
     if ( this.currentPosition && equals(this.currentPosition, position) ) {
       return this.$q.resolve(this.currentGeocodedPlace);

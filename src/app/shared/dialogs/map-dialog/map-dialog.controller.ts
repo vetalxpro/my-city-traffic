@@ -26,7 +26,7 @@ export class MapDialogController {
       .then(( map ) => {
         google.maps.event.trigger(map, 'resize');
         if ( this.center ) {
-          map.setCenter(this.getCenter());
+          map.setCenter(this.center);
         }
       });
 
@@ -44,7 +44,7 @@ export class MapDialogController {
     };
   }
 
-  getCenter(): google.maps.LatLng {
-    return this.geoService.positionToLatLng(this.center);
-  }
+  // getCenter(): google.maps.LatLng {
+  //   return this.geoService.positionToLatLng(this.center);
+  // }
 }

@@ -1,4 +1,4 @@
-import { IComponentOptions, IPromise, IQService } from 'angular';
+import { IComponentOptions, IPromise, IQService, IScope, equals } from 'angular';
 
 import { GooglemapsAutocompleteService } from './services';
 import { ToastService } from '../../../core/providers/services';
@@ -9,7 +9,7 @@ import './googlemaps-autocomplete.scss';
 export const googlemapsAutocompleteSelector = 'googlemapsAutocomplete';
 
 class GooglemapsAutocompleteController {
-  static $inject = [ '$q', 'GooglemapsAutocompleteService', 'ToastService' ];
+  static $inject = [ '$q', 'GooglemapsAutocompleteService', 'ToastService', '$scope' ];
 
   public selectedItem: any;
   public searchText: string;
@@ -29,36 +29,36 @@ class GooglemapsAutocompleteController {
 
   constructor( private $q: IQService,
                private googleAutocompleteService: GooglemapsAutocompleteService,
-               private toastService: ToastService ) {
-
+               private toastService: ToastService,
+               private $scope: IScope ) {
+    this.setWatchers();
   }
 
+
   public selectedItemChange() {
-    // this.ngModel = this.selectedItem;
-    // console.log(this.selectedItem);
-    if ( this.selectedItem ) {
-      this.googleAutocompleteService.getLatLng(this.selectedItem.place_id)
-        .then(( position ) => {
-          // console.log(position);
-          this.ngModel = position;
-          const pos = {
-            lng: position.geometry.location.lng(),
-            lat: position.geometry.location.lat()
-          };
-          this.onPlaceChanged({ position: pos });
-        });
-    }
+    this.ngModel = this.selectedItem;
+    /*if ( this.selectedItem ) {
+     this.googleAutocompleteService.getLatLng(this.selectedItem.place_id)
+     .then(( position ) => {
+     this.ngModel = position;
+     const pos = {
+     lng: position.geometry.location.lng(),
+     lat: position.geometry.location.lat()
+     };
+     this.onPlaceChanged({ position: pos });
+     });
+     }*/
   }
 
   public getResults(): IPromise<any[]> {
-    let resuls;
+    let results;
     if ( this.searchText !== this.oldSearchText ) {
-      resuls = this.searchTextChange();
+      results = this.searchTextChange();
     } else {
-      resuls = this.$q.resolve(this.queryResults);
+      results = this.$q.resolve(this.queryResults);
     }
     this.oldSearchText = this.searchText;
-    return resuls;
+    return results;
   }
 
   public searchTextChange(): IPromise<any[]> {
@@ -76,12 +76,24 @@ class GooglemapsAutocompleteController {
         if ( !data ) {
           return this.queryResults = [];
         }
-        return this.queryResults = data;
+        return this.queryResults = this.normalizeAddress(data);
       })
       .catch(( err ) => {
         console.log(err);
         return this.queryResults = [];
       });
+  }
+
+  private setWatchers() {
+    this.$scope.$watch('$ctrl.ngModel', ( newData, prevData ) => {
+      if ( !equals(newData, prevData) ) {
+        this.selectedItem = newData;
+      }
+    }, true);
+  }
+
+  private normalizeAddress( data: google.maps.places.QueryAutocompletePrediction[] ) {
+    return data.map(( item ) => Object.assign({}, item, { formatted_address: item.description }));
   }
 
 }

@@ -1,40 +1,34 @@
-import { IComponentOptions } from 'angular';
+import { IComponentOptions, IOnInit } from 'angular';
 
 import { AuthService, StorageService } from '../../core/providers/services';
 import { Contribution } from '../../core/models/contribution';
 import './dashboard.scss';
+import { DashboardService } from './dashboard.service';
 
 
 export const dashboardComponentSelector = 'dashboard';
 
-class DashboardController {
-  static $inject = [ 'AuthService', 'StorageService' ];
+class DashboardController implements IOnInit {
+  static $inject = [ 'AuthService', 'StorageService', 'DashboardService' ];
   public selectedDirection: Contribution;
-  public directions: Contribution[] = [
-    new Contribution({
-      title: 'test 1',
-      origin: { lat: 46.479009353404926, lng: 30.73373794555664 },
-      destination: { lat: 46.47179809582868, lng: 30.754680633544922 }
-    }),
-    new Contribution({
-      title: 'test 2',
-      origin: { lat: 46.494610770689384, lng: 30.72927474975586 },
-      destination: { lat: 46.461038542001724, lng: 30.704383850097656 }
-    }),
-    new Contribution({
-      title: 'test 3',
-      origin: { lat: 46.48515590043431, lng: 30.7342529296875 },
-      destination: { lat: 46.4419971984478, lng: 30.750560760498047 }
-    })
-  ];
+  public directions: Contribution[] = [];
 
   constructor( private authService: AuthService,
-               private storageService: StorageService ) {
+               private storageService: StorageService,
+               private dashboardService: DashboardService ) {
+  }
+
+  public $onInit() {
+    this.dashboardService.getDirections()
+      .then(( directions ) => {
+        this.directions = directions;
+        console.log(this.directions);
+      });
   }
 
   public getUserPosition() {
-    if ( this.storageService.getUser() ) {
-      return this.storageService.getUser().location.position;
+    if ( this.authService.currentUser ) {
+      return this.authService.currentUser.location.position;
     }
   }
 

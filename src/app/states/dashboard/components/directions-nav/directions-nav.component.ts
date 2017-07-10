@@ -1,12 +1,12 @@
 import { IComponentOptions } from 'angular';
 
-import { Contribution } from '../../../../core/models/contribution';
+import { Contribution } from '../../../../core/models';
 import './directions-nav.scss';
 
 
 export const directionsNavComponentSelector = 'directionsNav';
 
-interface IonSelectArgs {
+interface IOnSelectArgs {
   direction: Contribution;
 }
 
@@ -14,7 +14,7 @@ class DirectionsNavController {
   static $inject = [];
   public directions: Contribution[] = [];
   public selectedDirection: Contribution;
-  public onSelect: ( arg: IonSelectArgs ) => void;
+  public onSelect: ( arg: IOnSelectArgs ) => void;
 
   constructor() {
 

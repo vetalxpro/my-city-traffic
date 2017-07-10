@@ -29,11 +29,9 @@ export class StorageService {
     this.user = null;
   }
 
-  public saveUser( user: User, remember: boolean ) {
+  public saveUser( user: User ) {
+    this.localStorageService.set('user', this.user);
+    this.localStorageService.set('token', this.user.token);
     this.user = user;
-    if ( remember ) {
-      this.localStorageService.set('user', this.user);
-      this.localStorageService.set('token', this.user.token);
-    }
   }
 }

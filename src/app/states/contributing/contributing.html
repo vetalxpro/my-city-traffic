@@ -12,7 +12,7 @@
     <div flex layout="row">
       <md-button
         class="md-fab md-mini"
-        ng-click="$ctrl.openDialog()"
+        ng-click="$ctrl.openDialog('origin')"
       >
         <md-tooltip md-autohide="true">
           Add origin point
@@ -22,7 +22,7 @@
       <googlemaps-autocomplete
         flex
         placeholder="origin"
-        ng-model="$ctrl.origin"
+        ng-model="$ctrl.contributionFormData.origin"
         required="true"
         on-place-changed="$ctrl.changePlace('origin', position)"
         on-error="$ctrl.handleError(error)"
@@ -31,7 +31,7 @@
     <div flex layout="row">
       <md-button
         class="md-fab md-mini"
-        ng-click="$ctrl.openDialog()"
+        ng-click="$ctrl.openDialog('destination')"
       >
         <md-tooltip md-autohide="true">
           Add destination point
@@ -41,7 +41,7 @@
       <googlemaps-autocomplete
         flex
         placeholder="destination"
-        ng-model="$ctrl.destination"
+        ng-model="$ctrl.contributionFormData.destination"
         required="true"
         on-place-changed="$ctrl.changePlace('destination', position)"
         on-error="$ctrl.handleError(error)"
@@ -51,7 +51,8 @@
       <md-button
         class="md-raised"
         ng-class="{'md-primary':contributionForm.$valid}"
-        type="submit">Submit
+        type="submit"
+      >Submit
       </md-button>
     </div>
 

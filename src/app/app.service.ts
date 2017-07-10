@@ -1,14 +1,18 @@
-import { AuthService, GeoService, ToastService, StorageService } from './core/providers/services';
+import {
+  AuthService, GeoService, ToastService, StorageService,
+  FirebaseRequestService
+} from './core/providers/services';
 import { User } from './core/models';
 
 
 export class AppService {
-  static $inject = [ 'AuthService', 'GeoService', 'ToastService', 'StorageService' ];
+  static $inject = [ 'AuthService', 'GeoService', 'ToastService', 'StorageService', 'FirebaseRequestService' ];
 
   constructor( private authService: AuthService,
                private geoService: GeoService,
                private toastService: ToastService,
-               private storageService: StorageService ) {
+               private storageService: StorageService,
+               private requestService: FirebaseRequestService<User> ) {
   }
 
   public findCoordinates() {
@@ -31,8 +35,12 @@ export class AppService {
           placeId: place.place_id
         };
         this.authService.currentUser = Object.assign(this.authService.currentUser, updates);
-        this.storageService.saveUser(this.authService.currentUser, true);
+        this.storageService.saveUser(this.authService.currentUser);
+        this.requestService.patch(`users/${this.authService.currentUser.id}`, updates);
         // TODO: update user in firebase
+        return place;
+      })
+      .then(( place ) => {
         this.toastService.showSimple(place.formatted_address);
       })
       .catch(( err ) => {
