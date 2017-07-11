@@ -4,7 +4,7 @@
 
 </traffic-map>
 <directions-nav current-user="$ctrl.getUser()"
-                directions="$ctrl.directions"
+                directions="$ctrl.contributionObject[$ctrl.authService.currentUser.placeId]"
                 selected-direction="$ctrl.selectedDirection"
                 on-select="$ctrl.onDirectionSelect(direction)">
 </directions-nav>

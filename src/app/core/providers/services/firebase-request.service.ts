@@ -51,7 +51,6 @@ export class FirebaseRequestService<T> {
       .then(() => {
         obj[ id ] = Object.assign({}, obj[ id ], data);
         obj.$save();
-        console.log(obj);
         return obj[ id ];
       });
   }

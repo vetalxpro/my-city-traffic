@@ -25,13 +25,13 @@ export class StorageService {
 
   public clearUser() {
     this.localStorageService.remove('user');
-    this.localStorageService.remove('token');
+    // this.localStorageService.remove('token');
     this.user = null;
   }
 
   public saveUser( user: User ) {
     this.localStorageService.set('user', this.user);
-    this.localStorageService.set('token', this.user.token);
+    // this.localStorageService.set('token', this.user.token);
     this.user = user;
   }
 }

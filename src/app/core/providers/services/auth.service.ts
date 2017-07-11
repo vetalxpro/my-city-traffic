@@ -96,7 +96,7 @@ export class AuthService {
         this.getUserFromFirebase(firebaseUser.uid)
           .then(( user: User ) => {
             this.currentUser = new User(user);
-            console.log(user, this.currentUser);
+            // console.log(user, this.currentUser);
             this.storageService.saveUser(this.currentUser);
             this.firebaseMessagesArrayRef = this.$firebaseArray(this.firebaseRef.child('messages'));
             this.$rootScope.$broadcast('userAuthorized');

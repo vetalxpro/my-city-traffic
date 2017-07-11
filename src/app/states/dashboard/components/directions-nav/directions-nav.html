@@ -15,6 +15,9 @@
           ng-class="{'md-primary':$ctrl.selectedDirection===direction}"
           ng-click="$ctrl.selectDirection(direction)">
         {{ direction.title }}
+        <md-tooltip md-autohide="true">
+          {{ direction.title }}
+        </md-tooltip>
       </md-button>
     </md-list-item>
   </md-list>

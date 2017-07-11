@@ -11,7 +11,7 @@ export const dashboardComponentSelector = 'dashboard';
 class DashboardController implements IOnInit {
   static $inject = [ 'AuthService', 'StorageService', 'DashboardService' ];
   public selectedDirection: Contribution;
-  public directions: Contribution[] = [];
+  public contributionObject;
 
   constructor( private authService: AuthService,
                private storageService: StorageService,
@@ -19,11 +19,13 @@ class DashboardController implements IOnInit {
   }
 
   public $onInit() {
-    this.dashboardService.getDirections()
-      .then(( directions ) => {
-        this.directions = directions;
-        console.log(this.directions);
+    this.dashboardService.getContributionArrayRef()
+      .then(( contributionObject ) => {
+        this.contributionObject = contributionObject;
       });
+  }
+
+  public getDirections() {
   }
 
   public getUserPosition() {
